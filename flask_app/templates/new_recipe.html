@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Recipes</title>
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <h1>Add a New Recipe!</h1>
+            <a href="/recipes" class="btn btn-info">back to recipes</a>
+            <a href="/logout" class="btn btn-info">Logout</a>
+        </div>
+        <div class="content">
+            {% with messages = get_flashed_messages(category_filter=["recipe"]) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="recipe">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="/recipes/save" method="post">
+                <div class="recipe_details">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td><input type="text" name="recipe_name" id="recipe_name" value="{{session['recipe_name']}}"></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td><textarea name="recipe_description" id="" cols="30" rows="5" value="{{session['description']}}"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>Instructions</td>
+                                <td><textarea name="recipe_instructions" cols="30" rows="10" value="{{session['instructions']}}"></textarea></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="recipe_extras">
+                    <div class="r_e">
+                        <label for="date_made">Date Cooked/Made:</label>
+                        <br>
+                        <input type="date" name="date_made">
+                    </div>
+                    <div class="r_e">
+                        <form name="under_30">
+                            <p>Under 30 minutes?</p>
+                            <input type="radio" name="under_30" id="under_30_yes" value="yes" required>
+                            <label for="under_30_yes">Yes</label>
+                            <input type="radio" name="under_30" id="under_30_no" value="no" required>
+                            <label for="under_30_no">No</label>
+                        </form>
+                    </div>
+                    <br>
+                    <button type="submit">Add Recipe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
